@@ -2,14 +2,6 @@ using UnityEngine;
 
 public class RampLogic : MonoBehaviour
 {
-    // References to the Collider2D
-    //private Collider2D rampCollider;
-    //[SerializeField]
-    //private Collider2D groundCollider;
-    //[SerializeField]
-    //private Collider2D rearWheelCollider;
-    //[SerializeField]
-    //private Collider2D frontWheelCollider;
     [SerializeField]
     private Collider2D rearWheelCollider;
     [SerializeField]
@@ -18,21 +10,24 @@ public class RampLogic : MonoBehaviour
     private Collider2D groundCollider;
     private Collider2D rampCollider;
 
-    // References to the Rigidbody2D
     [SerializeField]
     private Rigidbody2D frame;
+    private PolygonCollider2D frameCollider;
 
-    //Ramp Direction
     public int rampDirection;
+
+    public float horizobtalInput;
 
     private void Start()
     {
-        // Get the Collider2D attached to the GameObject
+        frameCollider = frame.GetComponent<PolygonCollider2D>();
         rampCollider = GetComponent<Collider2D>();
     }
 
     private void Update()
     {
+        horizobtalInput = Input.GetAxisRaw("Horizontal");
+
         if (!rampCollider.isTrigger && !frontWheelCollider.IsTouching(rampCollider) && rearWheelCollider.IsTouching(groundCollider))
         {
             rampCollider.isTrigger = true;
@@ -42,13 +37,12 @@ public class RampLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Wheels") && rampCollider.isTrigger/*GHOST*/ && frame.transform.localScale.x == rampDirection && Input.GetAxisRaw("Horizontal") == -rampDirection)
+        if (other.CompareTag("Wheels") && !frameCollider.IsTouching(rampCollider) && rampCollider.isTrigger/*GHOST*/ && frame.transform.localScale.x == rampDirection && horizobtalInput == -rampDirection)
         {
             rampCollider.isTrigger = false;
             Debug.Log("The ramp is now solid!");
         }
 
-        //if (other.CompareTag("Wheels") && rampCollider.isTrigger && frame.transform.localScale.x == rampDirection) Debug.Log("Passing by!       " + -rampDirection);
     }
 
 }

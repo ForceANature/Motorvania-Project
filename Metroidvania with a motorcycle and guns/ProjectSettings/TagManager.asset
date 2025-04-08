@@ -5,9 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wheels
-  - Rider
+  - Frame
   - Ground
-  - Ramp
   layers:
   - Default
   - TransparentFX
@@ -15,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
-  - Motorcycle
-  - Rider
-  - Ramp
   - 
+  - 
+  - 
+  - 
+  - Motorcycle
   - 
   - 
   - 
