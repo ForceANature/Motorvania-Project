@@ -951,8 +951,8 @@ MonoBehaviour:
   holdTimer: 0
   facingRight: 1
   frame: {fileID: 315740853}
-  swingArm: {fileID: 1791375424}
-  rearWheel: {fileID: 630635347}
+  swingArmJoints: {fileID: 1791375433}
+  rearWheelJoints: {fileID: 630635355}
   frontWheelJoint: {fileID: 315740861}
 --- !u!114 &761966780
 MonoBehaviour:
@@ -972,8 +972,9 @@ MonoBehaviour:
   groundChecker: {fileID: 630635353}
   isGrounded: 0
   stoppingForce: 10
-  firstAngleThreshold: 90
-  currentAngle: 0
+  flipReloader: {fileID: 560113363}
+  tolerance: 5
+  zRotation: 0
 --- !u!114 &761966781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,8 +992,8 @@ MonoBehaviour:
   facingRight: 0
   frontWheel: {fileID: 315740861}
   rearWheel: {fileID: 630635354}
-  motorSpeed: -3000
-  motorTorque: 600
+  motorSpeed: -2000
+  motorTorque: 1000
 --- !u!1 &844098519
 GameObject:
   m_ObjectHideFlags: 0

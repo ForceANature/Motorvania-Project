@@ -19,17 +19,13 @@ public class Motorcycle_Rotation : MonoBehaviour
     public float stoppingForce;
 
     [SerializeField]
-    public float firstAngleThreshold = 90f;
-    private float previousAngle;
-    public float currentAngle;
+    private Gun flipReloader;
 
-    private float prevToThreshold;
-    private float currToThreshold;
+    [SerializeField] 
+    float tolerance = 5f;
 
-    void Start()
-    {
-        previousAngle = transform.eulerAngles.z;
-    }
+    private bool hasPassedZero = false;
+    public float zRotation;
 
     void Update()
     {
@@ -37,29 +33,39 @@ public class Motorcycle_Rotation : MonoBehaviour
 
         isGrounded = groundChecker.IsGrounded;
 
-        currentAngle = frame.transform.eulerAngles.z;
+        zRotation = NormalizeAngle(frame.transform.eulerAngles.z);
 
-        // Convert angles to [-180, 180] range
-        prevToThreshold = Mathf.DeltaAngle(previousAngle, firstAngleThreshold);
-        currToThreshold = Mathf.DeltaAngle(currentAngle, firstAngleThreshold);
-
-        // Check if signs are different => crossed the threshold
-        if (Mathf.Sign(prevToThreshold) != Mathf.Sign(currToThreshold))
+        // Check for 0° cross
+        if (!hasPassedZero && IsWithinTolerance(zRotation, 0f, tolerance))
         {
-            Debug.Log("Crossed threshold angle (any direction)");
+            hasPassedZero = true;
+            Debug.Log("Passed 0°!");
         }
 
-        previousAngle = currentAngle;
+        // Check for 180° cross
+        if (hasPassedZero && IsWithinTolerance(zRotation, 180f, tolerance))
+        {
+
+            hasPassedZero = false;
+            flipReloader.LoadMagazine();
+            Debug.Log("Passed 180°!");
+        }
+    }
+
+    bool IsWithinTolerance(float angle, float target, float tolerance)
+    {
+        return Mathf.Abs(Mathf.DeltaAngle(angle, target)) <= tolerance;
+    }
+
+    float NormalizeAngle(float angle)
+    {
+        // Normalize to 0–360°
+        return (angle + 360f) % 360f;
     }
 
     private void FixedUpdate()
     {
         HandleRotation();
-    }
-
-    float GetSignedAngleDifference(float from, float to)
-    {
-        return Mathf.DeltaAngle(from, to);
     }
 
     void HandleRotation()

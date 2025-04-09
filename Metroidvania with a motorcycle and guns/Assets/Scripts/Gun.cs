@@ -22,12 +22,13 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        loadMagazine();
+        LoadMagazine();
     }
     
-    void loadMagazine()
+    public void LoadMagazine()
     {
         magazine = magazineSize;
+        Debug.Log("Gun is Loaded!");
     }
 
     void Update()

@@ -17,9 +17,9 @@ public class Motorcycle_Turn_Script : MonoBehaviour
     [SerializeField]
     private GameObject frame;
     [SerializeField]
-    public GameObject swingArm;
+    public Joints_Handler swingArmJoints;
     [SerializeField]
-    public GameObject rearWheel;
+    public Joints_Handler rearWheelJoints;
 
     [SerializeField]
     private WheelJoint2D frontWheelJoint;
@@ -53,9 +53,9 @@ public class Motorcycle_Turn_Script : MonoBehaviour
 
         frame.GetComponent<Joints_Handler>().UpdateJoints();
 
-        swingArm.GetComponent<Joints_Handler>().UpdateJoints();
+        swingArmJoints.UpdateJoints();
 
-        rearWheel.GetComponent<Joints_Handler>().UpdateJoints();
+        rearWheelJoints.UpdateJoints();
 
         facingRight = !facingRight;
     }
