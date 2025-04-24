@@ -5,7 +5,7 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletForce = 10f;
-    public int magazineSize = 10;
+    public int magazineSize = 4;
     private int magazine;
 
     [SerializeField] private float slowTimeScale = 0.2f;
