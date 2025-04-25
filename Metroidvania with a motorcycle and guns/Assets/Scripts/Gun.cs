@@ -19,15 +19,23 @@ public class Gun : MonoBehaviour
 
     private int facingRight;
 
+    // Custom Cursor 
+    public CustomCursor cursorUI;
+
 
     private void Start()
     {
-        LoadMagazine();
+        magazine = magazineSize;
     }
     
     public void LoadMagazine()
     {
+        if (magazine == 0)
+        {
+            cursorUI.StopPulse();
+        }
         magazine = magazineSize;
+        cursorUI.ReFillCursor();// Cursor UI refill
         Debug.Log("Gun is Loaded!");
     }
 
@@ -52,6 +60,8 @@ public class Gun : MonoBehaviour
 
     void EnterSlowTime()
     {
+        cursorUI.StartDrain();// Cursor UI 
+
         isAiming = true;
         slowTimeTimer = slowTimeDuration;
 
@@ -75,6 +85,9 @@ public class Gun : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(bulletForce * facingRight * firePoint.right, ForceMode2D.Impulse);
         magazine--;
-
+        if (magazine == 0)
+        {
+            cursorUI.StartPulse();
+        }
     }
 }
