@@ -12,6 +12,7 @@ public class CustomCursor : MonoBehaviour
     public Image whiteFill;// White fill image
     public Image redFill;// Red fill image
     public Image grayBackground;// Gray background image
+    public Image whiteFillCylinderUI;// Cylinder UI White Fill
 
     //Fill drainage
     public float drainAmount = 0.2f; // how much to drain
@@ -38,7 +39,7 @@ public class CustomCursor : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             cursorTransform.parent as RectTransform,
             Input.mousePosition,
-            null, // or your camera if Screen Space - Camera
+            null,
             out pos
         );
         cursorTransform.anchoredPosition = pos;
@@ -113,6 +114,7 @@ public class CustomCursor : MonoBehaviour
             if (!Input.GetButton("Fire1"))
             {
                 whiteFill.fillAmount = targetFill;
+                whiteFillCylinderUI.fillAmount = targetFill;
                 redFill.fillAmount = targetFill;
                 isDraining = false;
                 yield break;
@@ -121,10 +123,12 @@ public class CustomCursor : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / drainDuration;
             whiteFill.fillAmount = Mathf.Lerp(startFill, targetFill, t);
+            whiteFillCylinderUI.fillAmount = Mathf.Lerp(startFill, targetFill, t);
             yield return null;
         }
 
         whiteFill.fillAmount = targetFill;
+        whiteFillCylinderUI.fillAmount = targetFill;
         redFill.fillAmount = targetFill;
         isDraining = false;
     }
@@ -132,6 +136,7 @@ public class CustomCursor : MonoBehaviour
     public void ReFillCursor()
     {
         whiteFill.fillAmount = 1f;
+        whiteFillCylinderUI.fillAmount = 1f;
         redFill.fillAmount = 1f;
     }
 
